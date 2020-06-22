@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seecen.entity.Course2">
+    <resultMap id="course" type="Course">
+        <id property="courseId" column="cid" ></id>
+        <result property="courseName" column="cname"/>
+        <association property="teacher" column="tid" javaType="Teacher" select="queryTeacher">
+
+        </association>
+    </resultMap>
+    <select id="queryCourse" resultMap="course">
+        select * from teacher t,COURSE c where t.tid=c.TID
+    </select>
+    <select id="queryTeacher" resultType="Teacher">
+        select tid as teacherId
+         ,tname as teacherName from teacher where TID=#{id}
+    </select>
+</mapper>
+

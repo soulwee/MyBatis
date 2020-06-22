@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seecen.dao.UserDao">
+  <select id="queryUserById" parameterType="int" resultType="User">
+      SELECT * FROM TB_USER WHERE USERID=#{id}
+  </select>
+    <insert id="saveUser" parameterType="User">
+        INSERT INTO TB_USER(USERID,USERNAME,PASSWORD) VALUES (USER_SEQ.nextval,#{userName},#{password})
+    </insert>
+    <update id="updateUser" parameterType="User">
+        UPDATE TB_USER SET USERNAME=#{userName},PASSWORD=#{password} WHERE USERID=#{userId}
+    </update>
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM TB_USER WHERE USERID=#{id}
+    </delete>
+    <insert id="addUser" parameterType="hashmap">
+        insert into TB_USER VALUES (USER_SEQ.nextval,#{userName},#{password})
+    </insert>
+    <select id="queryUser" resultType="User">
+        SELECT * from tb_USER where USERID IN
+        <foreach collection="list" separator="," open="(" index="i" item="user" close=")">
+            #{user}
+        </foreach>
+    </select>
+</mapper>
+

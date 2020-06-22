@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seecen.dao.StudentDao">
+    <resultMap id="studentMap" type="Student">
+        <id property="id" column="sid"></id>
+        <result property="name" column="sname"></result>
+        <result property="sex" column="ssex"></result>
+    </resultMap>
+    <select id="queryAllStudent" resultMap="studentMap">
+        SELECT * FROM STUDENT
+    </select>
+    <insert id="insertStudent">
+        INSERT INTO STUDENT(SID,SNAME,SSEX) VALUES (STUDENT_SEQ.nextval,#{arg0},#{arg1})
+    </insert>
+    <insert id="insertStudentMap" parameterType="hashmap">
+        INSERT INTO STUDENT(SID,SNAME,SSEX) VALUES (STUDENT_SEQ.nextval,#{name},#{sex})
+    </insert>
+    <select id="queryStudentList" resultMap="studentMap">
+        SELECT * FROM STUDENT WHERE SID IN
+        <foreach collection="list" close=")" separator="," item="object" index="i" open="(">
+            #{object}
+        </foreach>
+    </select>
+</mapper>

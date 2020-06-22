@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seecen.entity.Teacher">
+    <resultMap id="teacher" type="Teacher">
+
+        <id property="teacherId" column="tid"></id>
+        <result property="teacherName" column="tname"/>
+        <collection property="courseList" column="tid" ofType="Course">
+            <id  property="courseId" column="cid"/>
+            <result property="courseName" column="cname"/>
+        </collection>
+    </resultMap>
+    <select id="queryCourse" resultMap="teacher">
+        select * from  COURSE c,TEACHER t where t.TID=c.TID
+        <if test="_parameter!=null">
+            and tname like #{param1}
+        </if>
+    </select>
+</mapper>
+
